@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Core/Card.h"
+#include "Core/Deck.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -12,16 +13,21 @@ int main(int argc, char* argv[])
 #ifdef _WIN32
     SetConsoleOutputCP(CP_UTF8); // console output to UTF-8
 #endif
+
+    auto deck = Deck();
+    cout << "=== Before shuffle ===\n";
+    for (int i = 0; i < DeckSize; i++)
+    {
+        cout << deck.Deal(i).ToString() << " ";
+    }
     
-     for (int i = 0; i < static_cast<int>(Color::Size); i++)
-     {
-         for (int j = 0; j < static_cast<int>(Value::Size); j++)
-         {
-             auto temporaryCard = Card(static_cast<Color>(i), static_cast<Value>(j));
-     
-             cout << temporaryCard.ToString() << "\n";
-         }
-     }
+    
+    deck.Shuffle();
+    cout << "\n=== After shuffle ===\n";
+    for (int i = 0; i < DeckSize; i++)
+    {
+        cout << deck.Deal(i).ToString() << " ";
+    }
     
     return 0;
 }

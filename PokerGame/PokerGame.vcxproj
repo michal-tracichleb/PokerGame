@@ -155,6 +155,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Core\Card.cpp" />
+    <ClCompile Include="Core\Deck.cpp" />
     <ClCompile Include="PokerGame.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Card.h" />
+    <ClInclude Include="Core\Deck.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

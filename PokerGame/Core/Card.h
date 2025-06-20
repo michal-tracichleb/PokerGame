@@ -34,6 +34,7 @@ enum class Value : uint8_t
 class Card
 {
 public:
+    Card() = default;
     Card(const Color color, const Value value) : _color(color), _value(value) {}
     
     Color GetColor() const { return _color; }
