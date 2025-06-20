@@ -1,0 +1,39 @@
+bin/
+obj/
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+
+# JetBrains Rider / CLion
+.idea/
+*.iml
+cmake-build-*/
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+Makefile
+cmake_install.cmake
+install_manifest.txt
+
+# Binaries
+*.exe
+*.out
+*.app
+*.o
+*.obj
+*.so
+*.dll
+*.dylib
+
+# Others
+*.log
+*.tmp
+*.user
+*.bak
+*.swp
+
+# Rider Specific
+.idea/
+*.sln.iml
