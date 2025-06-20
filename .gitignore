@@ -1,5 +1,4 @@
 bin/
-obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
@@ -18,6 +17,12 @@ cmake_install.cmake
 install_manifest.txt
 
 # Binaries
+x64/
+*.pdb
+*.ilk
+*.tlog
+*.idb
+*.lastbuildstate
 *.exe
 *.out
 *.app
