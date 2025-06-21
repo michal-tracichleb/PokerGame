@@ -154,17 +154,29 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Core\AIPlayer.cpp" />
     <ClCompile Include="Core\Card.cpp" />
     <ClCompile Include="Core\Deck.cpp" />
+    <ClCompile Include="Core\HandEvaluator.cpp" />
+    <ClCompile Include="Core\HumanPlayer.cpp" />
+    <ClCompile Include="Core\Player.cpp" />
+    <ClCompile Include="Game\Dealer.cpp" />
+    <ClCompile Include="Game\GameState.cpp" />
+    <ClCompile Include="Game\Table.cpp" />
     <ClCompile Include="PokerGame.cpp" />
+    <ClCompile Include="UI\ConsoleUI.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Game\" />
-    <Folder Include="UI\" />
-  </ItemGroup>
-  <ItemGroup>
+    <ClInclude Include="Core\AIPlayer.h" />
     <ClInclude Include="Core\Card.h" />
     <ClInclude Include="Core\Deck.h" />
+    <ClInclude Include="Core\HandEvaluator.h" />
+    <ClInclude Include="Core\HumanPlayer.h" />
+    <ClInclude Include="Core\Player.h" />
+    <ClInclude Include="Game\Dealer.h" />
+    <ClInclude Include="Game\GameState.h" />
+    <ClInclude Include="Game\Table.h" />
+    <ClInclude Include="UI\ConsoleUI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
