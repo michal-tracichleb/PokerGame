@@ -2,6 +2,7 @@
 #include <windows.h>
 #endif
 
+#include <algorithm>
 #include <iostream>
 
 #include "Core/Deck.h"
@@ -14,19 +15,21 @@ int main(int argc, char* argv[])
     SetConsoleOutputCP(CP_UTF8); // console output to UTF-8
 #endif
 
+    vector<Card> sorted;
     auto deck = Deck();
-    cout << "=== Before shuffle ===\n";
-    for (int i = 0; i < DeckSize; i++)
+    cout << "=== Deck Shuffle ===\n";
+
+    while (deck.IsEmpty() == false)
     {
-        cout << deck.Deal(i).ToString() << " ";
+        sorted.push_back(deck.Deal());
+        cout << sorted.back().ToString() << "";
     }
     
-    
-    deck.Shuffle();
-    cout << "\n=== After shuffle ===\n";
-    for (int i = 0; i < DeckSize; i++)
+    cout << "\n=== Deck Sorted ===\n";
+    sort(sorted.begin(), sorted.end(), greater<>());
+    for (auto it = sorted.begin(); it != sorted.end(); it++)
     {
-        cout << deck.Deal(i).ToString() << " ";
+        cout << it->ToString() << "";
     }
     
     return 0;

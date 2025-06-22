@@ -1,18 +1,18 @@
 ﻿#pragma once
 
+#include <vector>
 #include "Card.h"
-
-constexpr int DeckSize = static_cast<int>(Color::Size) * static_cast<int>(Value::Size);
 
 class Deck
 {
 public:
     Deck();
-    
+
     void Initialize();
     void Shuffle();
-    Card Deal(int number) const;
+    Card Deal();
+    bool IsEmpty() const;
 
 private:
-    Card _cards[DeckSize];
+    std::vector<Card> _cards;
 };
