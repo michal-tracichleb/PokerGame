@@ -1,4 +1,6 @@
-﻿#include "RandomUtils.h"
+﻿#include <random>
+
+#include "RandomUtils.h"
 
 int Random::Range(const int min, const int max)
 {

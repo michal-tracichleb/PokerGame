@@ -173,6 +173,11 @@
     <ClInclude Include="Core\HandEvaluator.h" />
     <ClInclude Include="Core\HumanPlayer.h" />
     <ClInclude Include="Core\Player.h" />
+    <ClInclude Include="Enumes\Color.h" />
+    <ClInclude Include="Enumes\GamePhase.h" />
+    <ClInclude Include="Enumes\HandRank.h" />
+    <ClInclude Include="Enumes\PlayerDecision.h" />
+    <ClInclude Include="Enumes\Value.h" />
     <ClInclude Include="Game\Dealer.h" />
     <ClInclude Include="Game\Decision.h" />
     <ClInclude Include="Game\GameState.h" />

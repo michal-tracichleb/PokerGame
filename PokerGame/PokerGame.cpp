@@ -1,10 +1,10 @@
-#include <iostream>
-#include "Core/Card.h"
-#include "Core/Deck.h"
-
 #ifdef _WIN32
 #include <windows.h>
 #endif
+
+#include <iostream>
+
+#include "Core/Deck.h"
 
 using namespace std;
 

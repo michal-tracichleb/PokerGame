@@ -1,19 +1,9 @@
 ﻿#pragma once
 
 #include <vector>
-#include <cstdint>
+
 #include "../Core/Card.h"
-
-enum class GamePhase : uint8_t
-{
-    PreFlop,
-    Flop,
-    Turn,
-    River,
-    Showdown,
-
-    Size // Only for iteration
-};
+#include "../Enumes/GamePhase.h"
 
 struct GameState {
     std::vector<Card> communityCards;

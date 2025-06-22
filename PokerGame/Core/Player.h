@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+
 #include "Card.h"
 #include "../Game/Decision.h"
 #include "../Game/GameState.h"
@@ -9,7 +10,7 @@
 class Player
 {
 public:
-    Player(std::string name, const int initialChips);
+    Player(std::string name, int initialChips);
     virtual ~Player() = default;
 
     const std::string& GetName() const;

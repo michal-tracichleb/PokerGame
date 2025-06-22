@@ -1,35 +1,9 @@
 ﻿#pragma once
-#include <cstdint>
+
 #include <string>
 
-enum class Color : uint8_t
-{
-    Hearts,
-    Spades,
-    Diamonds,
-    Clubs,
-
-    Size // Only for iteration
-};
-
-enum class Value : uint8_t
-{
-    Two,
-    Three,
-    Four,
-    Five,
-    Six,
-    Seven,
-    Eight,
-    Nine,
-    Ten,
-    Jack,
-    Queen,
-    King,
-    Ace,
-
-    Size // Only for iteration
-};
+#include "../Enumes/Color.h"
+#include "../Enumes/Value.h"
 
 class Card
 {

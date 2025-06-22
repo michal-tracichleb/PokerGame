@@ -1,5 +1,6 @@
-﻿#include "Card.h"
-#include <string>
+﻿#include <string>
+
+#include "Card.h"
 
 using namespace std;
 

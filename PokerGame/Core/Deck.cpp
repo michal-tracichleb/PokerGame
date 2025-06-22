@@ -8,7 +8,6 @@ Deck::Deck()
     Initialize();
 }
 
-
 void Deck::Initialize()
 {
     int cardsCounter = 0;
