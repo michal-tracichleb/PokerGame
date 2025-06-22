@@ -7,11 +7,35 @@ HumanPlayer::HumanPlayer(string name, const int initialChips)
     : Player(std::move(name), initialChips)
 { }
 
-PlayerDecision HumanPlayer::MakeDecision()
+PlayerDecision HumanPlayer::MakeDecision(const GameState& state)
 {
     cout << "\n[" << _name << "] Your chips: " << _chips << "\n";
-    cout << "Pot: " << "state.pot" << ", Current bet: " << "currentBet" << "\n";
-    cout << "1) Fold\n2) Call / Check\n3) Raise\n> ";
+    cout << "Pot: " << state.pot << ", Current bet: " << state.currentBet << "\n";
+    cout << "Phase: ";
+
+    switch (state.phase)
+    {
+        case Phase::PreFlop:
+            cout << "Pre-Flop";
+            break;
+        case Phase::Flop:
+            cout << "Flop";
+            break;
+        case Phase::Turn:
+            cout << "Turn";
+            break;
+        case Phase::River:
+            cout << "River";
+            break;
+        case Phase::Showdown:
+            cout << "Showdown";
+            break;
+        default:
+            cout << "???";
+            break;
+    }
+
+    cout << "\n1) Fold\n2) Call / Check\n3) Raise\n> ";
 
     int choice;
     cin >> choice;

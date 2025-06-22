@@ -4,6 +4,7 @@
 #include <string>
 #include "Card.h"
 #include "../Game/Decision.h"
+#include "../Game/GameState.h"
 
 class Player
 {
@@ -24,7 +25,7 @@ public:
     void Fold();
     void Unfold();
 
-    virtual PlayerDecision MakeDecision() = 0;
+    virtual PlayerDecision MakeDecision(const GameState& state) = 0;
 
 protected:
     std::string _name;
