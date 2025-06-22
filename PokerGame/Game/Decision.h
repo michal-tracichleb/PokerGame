@@ -1,7 +1,8 @@
 ﻿#pragma once
 #include <cstdint>
 
-enum class PlayerDecision : uint8_t {
+enum class PlayerDecision : uint8_t
+{
     Fold,
     Check,
     Call,
@@ -14,4 +15,4 @@ enum class PlayerDecision : uint8_t {
 struct Decision {
     PlayerDecision type;
     int amount = 0; // Raise/Bet
-}
+};

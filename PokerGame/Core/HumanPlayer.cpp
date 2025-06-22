@@ -15,19 +15,19 @@ PlayerDecision HumanPlayer::MakeDecision(const GameState& state)
 
     switch (state.phase)
     {
-        case Phase::PreFlop:
+        case GamePhase::PreFlop:
             cout << "Pre-Flop";
             break;
-        case Phase::Flop:
+        case GamePhase::Flop:
             cout << "Flop";
             break;
-        case Phase::Turn:
+        case GamePhase::Turn:
             cout << "Turn";
             break;
-        case Phase::River:
+        case GamePhase::River:
             cout << "River";
             break;
-        case Phase::Showdown:
+        case GamePhase::Showdown:
             cout << "Showdown";
             break;
         default:

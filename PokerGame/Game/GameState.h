@@ -1,11 +1,11 @@
 ﻿#pragma once
 
 #include <vector>
+#include <cstdint>
 #include "../Core/Card.h"
 
-class Card;
-
-enum class Phase : int8_t{
+enum class GamePhase : uint8_t
+{
     PreFlop,
     Flop,
     Turn,
@@ -21,5 +21,5 @@ struct GameState {
     int currentBet = 0;
     int minimumRaise = 0;
     int activePlayerIndex = 0;
-    Phase phase = Phase::Size;
+    GamePhase phase = GamePhase::PreFlop;
 };
