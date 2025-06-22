@@ -33,7 +33,7 @@ public:
     void Fold();
     void Unfold();
 
-    virtual PlayerDecision MakeDecision(int currentBet, int pot, int minimumRaise) = 0;
+    virtual PlayerDecision MakeDecision() = 0;
 
 protected:
     std::string _name;
