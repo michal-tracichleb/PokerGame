@@ -164,6 +164,7 @@
     <ClCompile Include="Game\Table.cpp" />
     <ClCompile Include="PokerGame.cpp" />
     <ClCompile Include="UI\ConsoleUI.cpp" />
+    <ClCompile Include="Utilities\RandomUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\AIPlayer.h" />
@@ -177,6 +178,7 @@
     <ClInclude Include="Game\GameState.h" />
     <ClInclude Include="Game\Table.h" />
     <ClInclude Include="UI\ConsoleUI.h" />
+    <ClInclude Include="Utilities\RandomUtils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
