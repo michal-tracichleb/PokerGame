@@ -1,8 +1,6 @@
 ﻿#include <iostream>  
 #include "HumanPlayer.h"
 
-#include <iostream>
-
 using namespace std;
 
 HumanPlayer::HumanPlayer(string name, const int initialChips)

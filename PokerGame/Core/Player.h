@@ -3,16 +3,7 @@
 #include <vector>
 #include <string>
 #include "Card.h"
-
-enum class PlayerDecision : uint8_t{
-    Fold,
-    Check,
-    Call,
-    Bet,
-    Raise,
-
-    Size // Only for iteration
-};
+#include "../Game/Decision.h"
 
 class Player
 {

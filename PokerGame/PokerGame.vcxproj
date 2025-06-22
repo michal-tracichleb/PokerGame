@@ -161,7 +161,6 @@
     <ClCompile Include="Core\HumanPlayer.cpp" />
     <ClCompile Include="Core\Player.cpp" />
     <ClCompile Include="Game\Dealer.cpp" />
-    <ClCompile Include="Game\GameState.cpp" />
     <ClCompile Include="Game\Table.cpp" />
     <ClCompile Include="PokerGame.cpp" />
     <ClCompile Include="UI\ConsoleUI.cpp" />
@@ -174,6 +173,7 @@
     <ClInclude Include="Core\HumanPlayer.h" />
     <ClInclude Include="Core\Player.h" />
     <ClInclude Include="Game\Dealer.h" />
+    <ClInclude Include="Game\Decision.h" />
     <ClInclude Include="Game\GameState.h" />
     <ClInclude Include="Game\Table.h" />
     <ClInclude Include="UI\ConsoleUI.h" />
