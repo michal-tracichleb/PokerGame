@@ -4,6 +4,24 @@
 
 using namespace std;
 
+bool Card::operator<(const Card& other) const
+{
+    if (_value != other._value)
+        return _value < other._value;
+    return _color > other._color;
+}
+
+bool Card::operator>(const Card& other) const {
+    if (_value != other._value)
+        return _value > other._value;
+    return _color < other._color;
+}
+
+bool Card::operator==(const Card& other) const
+{
+    return _value == other._value && _color == other._color;
+}
+
 string Card::ToString() const
 {
     static const char* colors[] = {u8"\u2665", u8"\u2660", u8"\u2666", u8"\u2663"}; // ♥ ♠ ♦ ♣

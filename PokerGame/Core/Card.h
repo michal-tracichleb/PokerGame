@@ -13,6 +13,10 @@ public:
     
     Color GetColor() const { return _color; }
     Value GetValue() const { return _value; }
+
+    bool operator<(const Card& other) const;
+    bool operator>(const Card& other) const;
+    bool operator==(const Card& other) const;
     
     std::string ToString() const;
     

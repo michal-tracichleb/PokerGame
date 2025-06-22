@@ -4,10 +4,10 @@
 
 enum class Color : uint8_t
 {
-    Hearts,
-    Spades,
-    Diamonds,
     Clubs,
-
+    Diamonds,
+    Spades,
+    Hearts,
+    
     Size // Only for iteration
 };
