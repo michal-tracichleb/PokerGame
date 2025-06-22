@@ -1,5 +1,5 @@
 ﻿#include "Deck.h"
-#include <random>
+#include "../Utilities/RandomUtils.h"
 
 using namespace std;
 
@@ -23,14 +23,10 @@ void Deck::Initialize()
 }
 
 void Deck::Shuffle()
-{
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_int_distribution<> dist(0, DeckSize - 1);
-    
+{  
     for (auto& card : _cards)
     {
-        const int randomIndex = dist(gen);
+        const int randomIndex = Random::Range(0, DeckSize - 1);
         swap(card, _cards[randomIndex]);
     }
 }
