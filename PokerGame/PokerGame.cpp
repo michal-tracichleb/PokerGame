@@ -6,6 +6,7 @@
 
 #include "UI/ConsoleUI.h"
 #include "UI/MainMenu.h"
+#include "UI/SettingsMenu.h"
 #include "UI/Enumes/MainMenuOption.h"
 
 using namespace std;
@@ -15,19 +16,18 @@ int main(int argc, char* argv[])
 #ifdef _WIN32
     SetConsoleOutputCP(CP_UTF8); // console output to UTF-8
 #endif
+
+    ConsoleUI::SetupWindow();
+    ConsoleUI ui;
+    MainMenu menu(&ui);
     
     do
     {
-        ConsoleUI consoleUI;
-        consoleUI.SetupWindow();
-
-        MainMenu menu(&consoleUI);
         const MainMenuOption choice = menu.Run();
     
         if (choice == MainMenuOption::Play) {
-            cout << "\n\nPlay";
-            //     SettingsMenu settings;
-            //     GameSettings gs = settings.Run();
+            SettingsMenu settings(&ui);
+            GameSettings gs = settings.Run();
             //
             //     GameManager game(gs);
             //     game.Start();
@@ -36,8 +36,8 @@ int main(int argc, char* argv[])
         if (choice == MainMenuOption::Rank)
         {
             cout << "\n\nRank";
+            cin.get();
         }
-    
-        cin.get();
+        
     } while (true);
 }

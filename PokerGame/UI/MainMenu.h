@@ -6,7 +6,7 @@
 class MainMenu
 {
 public:
-    MainMenu(ConsoleUI* consoleUI)
+    explicit MainMenu(ConsoleUI* consoleUI)
         : _consoleUI(consoleUI)
     { }
     
@@ -14,6 +14,6 @@ public:
 
 private:
     void Show();
-    MainMenuOption _choice;
+    MainMenuOption _choice = MainMenuOption::Play;
     ConsoleUI* _consoleUI;
 };
