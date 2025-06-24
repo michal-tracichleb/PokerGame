@@ -18,9 +18,10 @@ int main(int argc, char* argv[])
     
     do
     {
-        ConsoleUI::SetupWindow();
+        ConsoleUI consoleUI;
+        consoleUI.SetupWindow();
 
-        MainMenu menu;
+        MainMenu menu(&consoleUI);
         const MainMenuOption choice = menu.Run();
     
         if (choice == MainMenuOption::Play) {

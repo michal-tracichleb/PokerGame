@@ -5,8 +5,15 @@
 
 #include "ConsoleUI.h"
 #include "Enumes/Key.h"
+#include "Enumes/TextColor.h"
 
 using namespace std;
+
+ConsoleUI::ConsoleUI()
+{
+    _hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetupWindow();
+}
 
 void ConsoleUI::SetupWindow()
 {
@@ -35,23 +42,32 @@ void ConsoleUI::Clear()
     system("cls");
 }
 
-void ConsoleUI::DrawTextHighlight(const int x, const int y, const string& text, const bool highlight)
+
+void ConsoleUI::SetCursorPosition(const int x, const int y) const
 {
-    COORD coord = { static_cast<SHORT>(x), static_cast<SHORT>(y) };
-    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleCursorPosition(hOut, coord);
-
-    if (highlight)
-        SetConsoleTextAttribute(hOut, FOREGROUND_BLUE | FOREGROUND_INTENSITY | BACKGROUND_INTENSITY);
-    else
-        SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
-
-    cout << text;
-
-    SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+    const COORD coord = { static_cast<SHORT>(x), static_cast<SHORT>(y) };
+    SetConsoleCursorPosition(_hOut, coord);
 }
 
-int ConsoleUI::GetArrowSelection(const vector<string>& options, const int x, const int y)
+void ConsoleUI::SetTextColor(const TextColor color) const
+{
+    SetConsoleTextAttribute(_hOut, static_cast<WORD>(color));
+}
+
+void ConsoleUI::ResetTextColor() const
+{
+    SetTextColor(TextColor::Default);
+}
+
+void ConsoleUI::DrawTextWithColor(const int x, const int y, const string& text, const TextColor color) const
+{
+    SetCursorPosition(x, y);
+    SetTextColor(color);
+    cout << text;
+    ResetTextColor();
+}
+
+int ConsoleUI::GetArrowSelection(const vector<string>& options, const int x, const int y) const
 {
     int selected = 0;
 
@@ -59,7 +75,8 @@ int ConsoleUI::GetArrowSelection(const vector<string>& options, const int x, con
     {
         for (int i = 0; i < static_cast<int>(options.size()); ++i)
         {
-            DrawTextHighlight(x, y + i, options[i], i == selected);
+            TextColor color = (i == selected) ? TextColor::Yellow : TextColor::Default;
+            DrawTextWithColor(x, y + i, options[i], color);
         }
 
         int key = _getch();

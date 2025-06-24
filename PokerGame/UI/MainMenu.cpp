@@ -23,7 +23,7 @@ void MainMenu::Show()
         "End Game"
     };
 
-    const int selection = ConsoleUI::GetArrowSelection(options, 0, 0);
+    const int selection = _consoleUI->GetArrowSelection(options, 0, 0);
 
     switch (selection)
     {

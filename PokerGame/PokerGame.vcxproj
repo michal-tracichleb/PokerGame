@@ -191,6 +191,7 @@
     <ClInclude Include="UI\ConsoleUI.h" />
     <ClInclude Include="UI\Enumes\Key.h" />
     <ClInclude Include="UI\Enumes\MainMenuOption.h" />
+    <ClInclude Include="UI\Enumes\TextColor.h" />
     <ClInclude Include="UI\MainMenu.h" />
     <ClInclude Include="UI\SettingsMenu.h" />
     <ClInclude Include="Utilities\RandomUtils.h" />
