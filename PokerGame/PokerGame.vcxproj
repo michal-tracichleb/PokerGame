@@ -161,9 +161,13 @@
     <ClCompile Include="Core\HumanPlayer.cpp" />
     <ClCompile Include="Core\Player.cpp" />
     <ClCompile Include="Game\Dealer.cpp" />
+    <ClCompile Include="Game\GameManager.cpp" />
+    <ClCompile Include="Game\GameSettings.cpp" />
     <ClCompile Include="Game\Table.cpp" />
     <ClCompile Include="PokerGame.cpp" />
     <ClCompile Include="UI\ConsoleUI.cpp" />
+    <ClCompile Include="UI\MainMenu.cpp" />
+    <ClCompile Include="UI\SettingsMenu.cpp" />
     <ClCompile Include="Utilities\RandomUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -180,9 +184,15 @@
     <ClInclude Include="Enumes\Value.h" />
     <ClInclude Include="Game\Dealer.h" />
     <ClInclude Include="Game\Decision.h" />
+    <ClInclude Include="Game\GameManager.h" />
+    <ClInclude Include="Game\GameSettings.h" />
     <ClInclude Include="Game\GameState.h" />
     <ClInclude Include="Game\Table.h" />
     <ClInclude Include="UI\ConsoleUI.h" />
+    <ClInclude Include="UI\Enumes\Key.h" />
+    <ClInclude Include="UI\Enumes\MainMenuOption.h" />
+    <ClInclude Include="UI\MainMenu.h" />
+    <ClInclude Include="UI\SettingsMenu.h" />
     <ClInclude Include="Utilities\RandomUtils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
