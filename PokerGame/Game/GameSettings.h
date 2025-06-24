@@ -1,7 +1,10 @@
 ﻿#pragma once
 
-class GameSettings
+#include "../Enumes/Difficulty.h"
+
+struct GameSettings
 {
-public:
-    
+    int numberOfOpponents = 1;
+    int startingChips = 1000;
+    Difficulty difficulty = Difficulty::Normal;
 };

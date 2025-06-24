@@ -28,9 +28,15 @@ int main(int argc, char* argv[])
         if (choice == MainMenuOption::Play) {
             SettingsMenu settings(&ui);
             GameSettings gs = settings.Run();
-            //
+
+            cout << gs.numberOfOpponents << endl;
+            cout << gs.startingChips << endl;
+            cout << static_cast<int>(gs.difficulty) << endl;
+            
             //     GameManager game(gs);
             //     game.Start();
+
+            cin.get();
         }
 
         if (choice == MainMenuOption::Rank)

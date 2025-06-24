@@ -10,9 +10,9 @@ GameSettings SettingsMenu::Run()
 
     GameSettings settings;
 
-    // settings.numberOfOpponents = GetNumberOfOpponents();
-    // settings.startingChips = GetStartingChips();
-    // settings.difficulty = GetDifficulty();
+    settings.numberOfOpponents = GetNumberOfOpponents();
+    settings.startingChips = GetStartingChips();
+    settings.difficulty = GetDifficulty();
 
     return settings;
 }
@@ -21,7 +21,7 @@ int SettingsMenu::GetNumberOfOpponents() const
 {
     ConsoleUI::Clear();
 
-    vector<string> options = { "1", "2", "3", "4", "5", "6", "7", "8" };
+    const vector<string> options = { "1", "2", "3", "4", "5", "6", "7", "8" };
     _consoleUI->DrawTextWithColor(0, 0, "Select number of opponents:");
     const int choice = _consoleUI->GetArrowSelection(options, 0, 2);
     return choice + 1;

@@ -162,7 +162,6 @@
     <ClCompile Include="Core\Player.cpp" />
     <ClCompile Include="Game\Dealer.cpp" />
     <ClCompile Include="Game\GameManager.cpp" />
-    <ClCompile Include="Game\GameSettings.cpp" />
     <ClCompile Include="Game\Table.cpp" />
     <ClCompile Include="PokerGame.cpp" />
     <ClCompile Include="UI\ConsoleUI.cpp" />
