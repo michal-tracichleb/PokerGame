@@ -6,7 +6,7 @@ using namespace std;
 
 GameSettings SettingsMenu::Run()
 {
-    ConsoleUI::Clear();
+    _consoleUI->Clear();
 
     GameSettings settings;
 
@@ -19,7 +19,7 @@ GameSettings SettingsMenu::Run()
 
 int SettingsMenu::GetNumberOfOpponents() const
 {
-    ConsoleUI::Clear();
+    _consoleUI->Clear();
 
     const vector<string> options = { "1", "2", "3", "4", "5", "6", "7", "8" };
     _consoleUI->DrawTextWithColor(0, 0, "Select number of opponents:");
@@ -29,7 +29,7 @@ int SettingsMenu::GetNumberOfOpponents() const
 
 int SettingsMenu::GetStartingChips() const
 {
-    ConsoleUI::Clear();
+    _consoleUI->Clear();
 
     const vector<string> options = { "100", "500", "1000", "5000" };
     _consoleUI->DrawTextWithColor(0, 0, "Select starting chips:");
@@ -39,7 +39,7 @@ int SettingsMenu::GetStartingChips() const
 
 Difficulty SettingsMenu::GetDifficulty() const
 {
-    ConsoleUI::Clear();
+    _consoleUI->Clear();
 
     const vector<string> options = { "Easy", "Normal", "Hard" };
     _consoleUI->DrawTextWithColor(0, 0, "Select difficulty level:");

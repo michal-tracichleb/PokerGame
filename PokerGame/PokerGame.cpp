@@ -17,33 +17,29 @@ int main(int argc, char* argv[])
     SetConsoleOutputCP(CP_UTF8); // console output to UTF-8
 #endif
 
-    ConsoleUI::SetupWindow();
-    ConsoleUI ui;
-    MainMenu menu(&ui);
+    auto* ui = new ConsoleUI();
+    ui->SetupWindow();
+    MainMenu menu(ui);
     
     do
     {
         const MainMenuOption choice = menu.Run();
     
         if (choice == MainMenuOption::Play) {
-            SettingsMenu settings(&ui);
+            SettingsMenu settings(ui);
             GameSettings gs = settings.Run();
-
-            cout << gs.numberOfOpponents << endl;
-            cout << gs.startingChips << endl;
-            cout << static_cast<int>(gs.difficulty) << endl;
-            
-            //     GameManager game(gs);
-            //     game.Start();
-
-            cin.get();
+            //GameManager game(gs);
+            //game.Start();
         }
 
         if (choice == MainMenuOption::Rank)
         {
-            cout << "\n\nRank";
+            ui->Clear();
+            
+            cout << "One day... your name will shine here with eternal poker glory.";
+            // TODO: For now, it's just a lonely placeholder dreaming of fame.
+            
             cin.get();
         }
-        
     } while (true);
 }

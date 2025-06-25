@@ -15,7 +15,7 @@ ConsoleUI::ConsoleUI()
     SetupWindow();
 }
 
-void ConsoleUI::SetupWindow()
+void ConsoleUI::SetupWindow() const
 {
     // TODO: resize window
     
@@ -37,7 +37,7 @@ void ConsoleUI::SetupWindow()
     SetConsoleTitleA(title.c_str());
 }
 
-void ConsoleUI::Clear()
+void ConsoleUI::Clear() const
 {
     system("cls");
 }

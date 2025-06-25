@@ -15,7 +15,7 @@ MainMenuOption MainMenu::Run()
 
 void MainMenu::Show()
 {
-    ConsoleUI::SetupWindow();
+    _consoleUI->SetupWindow();
 
     vector<string> options = {
         "Play",

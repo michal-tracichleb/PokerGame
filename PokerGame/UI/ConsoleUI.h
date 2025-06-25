@@ -10,8 +10,8 @@ class ConsoleUI {
 public:
     ConsoleUI();
     
-    static void SetupWindow();
-    static void Clear();
+    void SetupWindow() const;
+    void Clear() const;
 
     void SetCursorPosition(int x, int y) const;
     void SetTextColor(TextColor color) const;
