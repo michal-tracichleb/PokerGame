@@ -4,6 +4,7 @@
 
 #include <iostream>
 
+#include "Game/GameManager.h"
 #include "UI/ConsoleUI.h"
 #include "UI/MainMenu.h"
 #include "UI/SettingsMenu.h"
@@ -27,9 +28,9 @@ int main(int argc, char* argv[])
     
         if (choice == MainMenuOption::Play) {
             SettingsMenu settings(ui);
-            GameSettings gs = settings.Run();
-            //GameManager game(gs);
-            //game.Start();
+            const GameSettings gs = settings.Run();
+            GameManager game(gs, ui);
+            game.Start();
         }
 
         if (choice == MainMenuOption::Rank)
