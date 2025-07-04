@@ -17,12 +17,13 @@ private:
     ConsoleUI* _ui;
 
     GameState _state;
-    Dealer _dealer;
     Table _table;
+    Dealer _dealer;
 
-    void GameLoop() const;
+    void GameLoop();
     void InitializeGame();
-    void ProcessTurn() const;
+    void ProcessTurn();
     void RenderState() const;
+    bool IsRoundOver() const;
     bool IsGameOver() const;
 };

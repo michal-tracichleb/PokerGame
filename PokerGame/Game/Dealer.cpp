@@ -3,9 +3,8 @@
 #include <vector>
 #include <memory>
 
-
-Dealer::Dealer(Table* table)
-    : _table(table)
+Dealer::Dealer(Table* table, GameState* state)
+    : _table(table), _state(state)
 {
 }
 
@@ -26,16 +25,16 @@ void Dealer::DealHoleCards() {
 void Dealer::DealFlop() {
     _deck.Burn();
     for (int i = 0; i < 3; ++i) {
-        _table->AddToCommunity(_deck.Deal());
+        _state->communityCards.push_back(_deck.Deal());
     }
 }
 
 void Dealer::DealTurn() {
     _deck.Burn();
-    _table->AddToCommunity(_deck.Deal());
+    _state->communityCards.push_back(_deck.Deal());
 }
 
 void Dealer::DealRiver() {
     _deck.Burn();
-    _table->AddToCommunity(_deck.Deal());
+    _state->communityCards.push_back(_deck.Deal());
 }

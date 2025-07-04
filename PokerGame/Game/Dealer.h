@@ -2,10 +2,11 @@
 
 #include "../Core/Deck.h"
 #include "../Game/Table.h"
+#include "GameState.h"
 
 class Dealer {
 public:
-    Dealer(Table* table);
+    Dealer(Table* table, GameState* state);
 
     void ShuffleDeck();
     void DealHoleCards();
@@ -16,4 +17,5 @@ public:
 private:
     Deck _deck;
     Table* _table;
+    GameState* _state;
 };
