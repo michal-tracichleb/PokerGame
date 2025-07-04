@@ -15,9 +15,9 @@ MainMenuOption MainMenu::Run()
 
 void MainMenu::Show()
 {
-    _consoleUI->SetupWindow();
+    _consoleUI->Clear();
 
-    vector<string> options = {
+    const vector<string> options = {
         "Play",
         "Rank",
         "End Game"

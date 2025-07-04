@@ -1,5 +1,10 @@
 ﻿#include "GameManager.h"
+#include "../Core/HumanPlayer.h"
+#include "../Core/AIPlayer.h"
 #include <iostream>
+
+using namespace std;
+
 
 GameManager::GameManager(const GameSettings& settings, ConsoleUI* ui)
     : _settings(settings), _ui(ui) {}//, _dealer(settings), _table(settings) {}
@@ -12,9 +17,25 @@ void GameManager::Start() {
 void GameManager::InitializeGame()
 {
     _ui->Clear();
-    std::cout << "Starting Texas Hold'em with " 
+    cout << "Starting Texas Hold'em with "
               << _settings.numberOfOpponents << " opponents...\n";
-    // TODO: create players, shuffle deck, etc.
+
+    vector<shared_ptr<Player>> players;
+    players.push_back(std::make_shared<HumanPlayer>("Player", _settings.startingChips));
+    
+    for (int i = 1; i <= _settings.numberOfOpponents; ++i) {
+        string name = "Bot " + to_string(i);
+        players.push_back(make_shared<AIPlayer>(name, _settings.startingChips));
+    }
+    
+    _table.SetPlayers(players);
+
+    // TODO:
+    // _dealer.SetPlayers(_players);
+    // _dealer.ShuffleDeck();
+    // _dealer.DealHoleCards();
+
+    std::cin.get();
 }
 
 void GameManager::GameLoop() const

@@ -21,7 +21,7 @@ int SettingsMenu::GetNumberOfOpponents() const
 {
     _consoleUI->Clear();
 
-    const vector<string> options = { "1", "2", "3", "4", "5", "6", "7", "8" };
+    const vector<string> options = { "1", "2", "3", "4", "5", "6", "7" };
     _consoleUI->DrawTextWithColor(0, 0, "Select number of opponents:");
     const int choice = _consoleUI->GetArrowSelection(options, 0, 2);
     return choice + 1;
