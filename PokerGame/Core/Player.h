@@ -27,6 +27,7 @@ public:
     void Unfold();
 
     virtual PlayerDecision MakeDecision(const GameState& state) = 0;
+    virtual bool IsAI() const { return false; }
 
 protected:
     std::string _name;
