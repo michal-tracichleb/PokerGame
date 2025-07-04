@@ -165,6 +165,7 @@
     <ClCompile Include="Game\Table.cpp" />
     <ClCompile Include="PokerGame.cpp" />
     <ClCompile Include="UI\ConsoleUI.cpp" />
+    <ClCompile Include="UI\GameUI.cpp" />
     <ClCompile Include="UI\MainMenu.cpp" />
     <ClCompile Include="UI\SettingsMenu.cpp" />
     <ClCompile Include="Utilities\RandomUtils.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="UI\Enumes\Key.h" />
     <ClInclude Include="UI\Enumes\MainMenuOption.h" />
     <ClInclude Include="UI\Enumes\TextColor.h" />
+    <ClInclude Include="UI\GameUI.h" />
     <ClInclude Include="UI\MainMenu.h" />
     <ClInclude Include="UI\SettingsMenu.h" />
     <ClInclude Include="Utilities\RandomUtils.h" />

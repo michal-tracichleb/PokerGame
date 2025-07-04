@@ -7,7 +7,7 @@ using namespace std;
 
 
 GameManager::GameManager(const GameSettings& settings, ConsoleUI* ui)
-    : _settings(settings), _ui(ui), _table(), _dealer(&_table, &_state) {}
+    : _settings(settings), _ui(ui), _table(), _dealer(&_table, &_state), _gameUI(ui) {}
 
 void GameManager::Start() {
     InitializeGame();
@@ -17,10 +17,6 @@ void GameManager::Start() {
 void GameManager::InitializeGame()
 {
     _ui->Clear();
-    cout << "Starting Texas Hold'em with "
-              << _settings.numberOfOpponents << " opponents...\n";
-
-    
     vector<shared_ptr<Player>> players;
     players.push_back(std::make_shared<HumanPlayer>("Player", _settings.startingChips));
     
@@ -37,7 +33,6 @@ void GameManager::GameLoop()
 {
     while (!IsGameOver())
     {
-        std::cout << "Starting new round...\n";
         _dealer.ShuffleDeck();
         _dealer.DealHoleCards();
         _state.phase = GamePhase::PreFlop;
@@ -55,10 +50,9 @@ void GameManager::GameLoop()
     }
 }
 
-void GameManager::RenderState() const
+void GameManager::RenderState()
 {
-    std::cout << "Round in progress...\n";
-    // TODO: draw table, cards, player chips etc.
+    _gameUI.RenderTable(_table, _state);
 }
 
 void GameManager::ProcessTurn()
@@ -66,7 +60,6 @@ void GameManager::ProcessTurn()
     switch (_state.phase)
     {
     case GamePhase::PreFlop:
-        std::cout << "Processing Pre-Flop decisions...\n";
         // TODO: logika betowania
         _dealer.DealFlop();
         _state.phase = GamePhase::Flop;
@@ -74,21 +67,18 @@ void GameManager::ProcessTurn()
         break;
 
     case GamePhase::Flop:
-        std::cout << "Processing Flop decisions...\n";
         _dealer.DealTurn();
         _state.phase = GamePhase::Turn;
         std::cin.get();
         break;
 
     case GamePhase::Turn:
-        std::cout << "Processing Turn decisions...\n";
         _dealer.DealRiver();
         _state.phase = GamePhase::River;
         std::cin.get();
         break;
 
     case GamePhase::River:
-        std::cout << "Processing River decisions...\n";
         _state.phase = GamePhase::Showdown;
         std::cin.get();
         break;

@@ -2,6 +2,7 @@
 
 #include "GameSettings.h"
 #include "../UI/ConsoleUI.h"
+#include "../UI/GameUI.h"
 #include "GameState.h"
 #include "Dealer.h"
 #include "Table.h"
@@ -15,6 +16,7 @@ public:
 private:
     GameSettings _settings;
     ConsoleUI* _ui;
+    GameUI _gameUI;
 
     GameState _state;
     Table _table;
@@ -23,7 +25,7 @@ private:
     void GameLoop();
     void InitializeGame();
     void ProcessTurn();
-    void RenderState() const;
+    void RenderState();
     bool IsRoundOver() const;
     bool IsGameOver() const;
 };
