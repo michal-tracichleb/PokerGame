@@ -18,7 +18,9 @@ void GameManager::InitializeGame()
 {
     _ui->Clear();
     vector<shared_ptr<Player>> players;
-    players.push_back(std::make_shared<HumanPlayer>("Player", _settings.startingChips));
+    const auto human = std::make_shared<HumanPlayer>("Player", _settings.startingChips);
+    human->SetUI(&_gameUI);
+    players.push_back(human);
     
     for (int i = 1; i <= _settings.numberOfOpponents; ++i) {
         string name = "Bot " + to_string(i);
@@ -26,18 +28,15 @@ void GameManager::InitializeGame()
     }
     
     _table.SetPlayers(players);
-    _state.phase = GamePhase::PreFlop;
 }
 
 void GameManager::GameLoop()
 {
     while (!IsGameOver())
     {
+        ResetRound();
         _dealer.ShuffleDeck();
         _dealer.DealHoleCards();
-        _state.phase = GamePhase::PreFlop;
-        _state.communityCards.clear();
-        _state.pot = 0;
 
         while (!IsRoundOver())
         {
@@ -50,48 +49,102 @@ void GameManager::GameLoop()
     }
 }
 
+void GameManager::ResetRound()
+{
+    for (auto& player : _table.GetPlayers())
+    {
+        player->ResetBet();
+        player->Unfold();
+    }
+    _state.currentBet = 0;
+    _state.pot = 0;
+    _state.phase = GamePhase::PreFlop;
+    _state.communityCards.clear();
+}
+
 void GameManager::RenderState()
 {
     _gameUI.RenderTable(_table, _state);
+    
 }
 
 void GameManager::ProcessTurn()
 {
+    MakeDecisions();
+
     switch (_state.phase)
     {
     case GamePhase::PreFlop:
-        // TODO: logika betowania
         _dealer.DealFlop();
         _state.phase = GamePhase::Flop;
-        std::cin.get();
         break;
 
     case GamePhase::Flop:
         _dealer.DealTurn();
         _state.phase = GamePhase::Turn;
-        std::cin.get();
         break;
 
     case GamePhase::Turn:
         _dealer.DealRiver();
         _state.phase = GamePhase::River;
-        std::cin.get();
         break;
 
     case GamePhase::River:
         _state.phase = GamePhase::Showdown;
-        std::cin.get();
         break;
 
     case GamePhase::Showdown:
-        std::cout << "\nShowdown! (Winner TBD)\n";
-        std::cin.get();
         break;
-        
+
     default:
         throw out_of_range("Invalid GamePhase");
     }
+
+    std::cin.get();
 }
+
+void GameManager::MakeDecisions()
+{
+    for (const auto& player : _table.GetPlayers())
+    {
+        if (player->IsFolded() || player->GetChips() <= 0)
+            continue;
+
+        const auto decision = player->MakeDecision(_state);
+
+        switch (decision)
+        {
+        case PlayerDecision::Fold:
+            player->Fold();
+            break;
+
+        case PlayerDecision::Call:
+        case PlayerDecision::Check:
+            {
+                int toCall = _state.currentBet - player->GetCurrentBet();
+                player->PayChips(toCall);
+                _state.pot += toCall;
+                break;
+            }
+
+        case PlayerDecision::Raise:
+        case PlayerDecision::Bet:
+            {
+                int raiseAmount = 50; // TODO: prompt dla HumanPlayer
+                player->PayChips(raiseAmount);
+                _state.pot += raiseAmount;
+                _state.currentBet = player->GetCurrentBet();
+                break;
+            }
+
+        default:
+            break;
+        }
+
+        RenderState();
+    }
+}
+
 
 bool GameManager::IsRoundOver() const
 {

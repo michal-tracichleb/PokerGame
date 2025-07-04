@@ -48,5 +48,20 @@ void Player::Fold() {
 }
 
 void Player::Unfold() {
-    _folded = false;
+    if (_chips > 0) _folded = false;
+}
+
+int Player::GetCurrentBet() const {
+    return _currentBet;
+}
+
+void Player::PayChips(int amount) {
+    if (amount > _chips)
+        amount = _chips;
+    _chips -= amount;
+    _currentBet += amount;
+}
+
+void Player::ResetBet() {
+    _currentBet = 0;
 }

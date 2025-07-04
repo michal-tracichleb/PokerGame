@@ -1,4 +1,5 @@
 ﻿#include "GameUI.h"
+#include "../Enumes/PlayerDecision.h"
 #include <iostream>
 
 using namespace std;
@@ -15,7 +16,7 @@ void GameUI::RenderTable(const Table& table, const GameState& state)
     string cards;
     for (const auto& card : state.communityCards)
         cards += card.ToString() + " ";
-    _ui->DrawTextWithColor(4, y++, cards, TextColor::White);
+    _ui->DrawTextWithColor(4, y++, cards, TextColor::Default);
     y++;
 
     _ui->DrawTextWithColor(2, y++, "=== Players ===", TextColor::Green);
@@ -23,9 +24,10 @@ void GameUI::RenderTable(const Table& table, const GameState& state)
     for (const auto& player : table.GetPlayers())
     {
         string status = player->IsFolded() ? " (FOLDED)" : "";
+        TextColor statusColor = player->IsFolded() ? TextColor::Red : TextColor::Default;
         string info = player->GetName() + " | Chips: " +
                            to_string(player->GetChips()) + status;
-        _ui->DrawTextWithColor(4, y++, info, TextColor::White);
+        _ui->DrawTextWithColor(4, y++, info, statusColor);
 
         string hand = "Cards: ";
         if (player->IsAI()) {
@@ -52,4 +54,35 @@ void GameUI::RenderTable(const Table& table, const GameState& state)
     }
 
     _ui->DrawTextWithColor(2, y++, "Phase: " + phase, TextColor::Magenta);
+}
+
+PlayerDecision GameUI::
+RenderPlayerDecisionPrompt(Player& player, const int callAmount) const
+{
+    _ui->Clear();
+    int y = 2;
+
+    _ui->DrawTextWithColor(2, y++, "Your turn, " + player.GetName(), TextColor::Yellow);
+    _ui->DrawTextWithColor(2, y++, "Chips: " + to_string(player.GetChips()), TextColor::Default);
+
+    string hand = "Cards: ";
+    for (const auto& card : player.GetHand())
+        hand += card.ToString() + " ";
+    _ui->DrawTextWithColor(2, y++, hand, TextColor::Default);
+
+    y++;
+
+    const vector<string> options = {
+        "Fold",
+        "Call " + to_string(callAmount),
+        "Raise"
+    };
+
+    const int choice = _ui->GetArrowSelection(options, 4, y);
+    switch (choice) {
+    case 0: return PlayerDecision::Fold;
+    case 1: return PlayerDecision::Call;
+    case 2: return PlayerDecision::Raise;
+    default: return PlayerDecision::Fold;
+    }
 }

@@ -26,6 +26,10 @@ public:
     void Fold();
     void Unfold();
 
+    int GetCurrentBet() const;
+    void PayChips(int amount);
+    void ResetBet();
+
     virtual PlayerDecision MakeDecision(const GameState& state) = 0;
     virtual bool IsAI() const { return false; }
 
@@ -34,4 +38,7 @@ protected:
     int _chips;
     std::vector<Card> _hand;
     bool _folded;
+
+private:
+    int _currentBet = 0;
 };

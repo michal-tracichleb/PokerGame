@@ -22,10 +22,15 @@ private:
     Table _table;
     Dealer _dealer;
 
-    void GameLoop();
     void InitializeGame();
-    void ProcessTurn();
-    void RenderState();
+    
+    void GameLoop();
+    void ResetRound();
     bool IsRoundOver() const;
     bool IsGameOver() const;
+
+    void ProcessTurn();
+    void MakeDecisions();
+    
+    void RenderState();
 };
