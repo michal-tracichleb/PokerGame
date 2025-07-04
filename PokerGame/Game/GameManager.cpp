@@ -7,7 +7,7 @@ using namespace std;
 
 
 GameManager::GameManager(const GameSettings& settings, ConsoleUI* ui)
-    : _settings(settings), _ui(ui) {}//, _dealer(settings), _table(settings) {}
+    : _settings(settings), _ui(ui), _table(), _dealer(&_table) {}
 
 void GameManager::Start() {
     InitializeGame();
@@ -30,10 +30,8 @@ void GameManager::InitializeGame()
     
     _table.SetPlayers(players);
 
-    // TODO:
-    // _dealer.SetPlayers(_players);
-    // _dealer.ShuffleDeck();
-    // _dealer.DealHoleCards();
+    _dealer.ShuffleDeck();
+    _dealer.DealHoleCards();
 
     std::cin.get();
 }

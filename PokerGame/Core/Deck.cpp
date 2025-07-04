@@ -44,6 +44,13 @@ Card Deck::Deal()
     return top;
 }
 
+void Deck::Burn()
+{
+    if (IsEmpty())
+        throw out_of_range("Cannot burn from empty deck");
+    _cards.pop_back();
+}
+
 bool Deck::IsEmpty() const
 {
     return _cards.empty();

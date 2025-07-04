@@ -11,6 +11,7 @@ public:
     void Initialize();
     void Shuffle();
     Card Deal();
+    void Burn();
     bool IsEmpty() const;
 
 private:
