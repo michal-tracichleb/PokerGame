@@ -14,7 +14,7 @@ namespace {
     }
 
     bool IsFlush(const vector<Card>& cards) {
-        Color color = cards[0].GetColor();
+        const Color color = cards[0].GetColor();
         return all_of(cards.begin(), cards.end(), [=](const Card& c) { return c.GetColor() == color; });
     }
 
@@ -28,11 +28,13 @@ namespace {
     }
 
     bool CheckFourOfAKind(const map<Value, vector<Card>, greater<>>& groups, const vector<Card>& sorted, vector<Card>& result) {
-        for (const auto& [val, group] : groups) {
+        for (auto it = groups.begin(); it != groups.end(); ++it) {
+            Value val = it->first;
+            const vector<Card>& group = it->second;
             if (group.size() == 4) {
-                result = group;
+                result.assign(group.begin(), group.end());
                 for (const auto& card : sorted) {
-                    if (card.GetValue() != val) {
+                    if (static_cast<int>(card.GetValue()) != static_cast<int>(val)){
                         result.push_back(card);
                         break;
                     }
@@ -45,11 +47,14 @@ namespace {
 
     bool CheckFullHouse(const map<Value, vector<Card>, greater<>>& groups, vector<Card>& result) {
         vector<Card> three, two;
-        for (const auto& [val, group] : groups) {
+        for (auto it = groups.begin(); it != groups.end(); ++it) {
+            const vector<Card>& group = it->second;
             if (group.size() >= 3 && three.empty()) {
-                three.insert(three.end(), group.begin(), group.begin() + 3);
+                for (int i = 0; i < 3; ++i)
+                    three.push_back(group[i]);
             } else if (group.size() >= 2 && two.empty()) {
-                two.insert(two.end(), group.begin(), group.begin() + 2);
+                for (int i = 0; i < 2; ++i)
+                    two.push_back(group[i]);
             }
         }
         if (!three.empty() && !two.empty()) {
@@ -61,11 +66,13 @@ namespace {
     }
 
     bool CheckThreeOfAKind(const map<Value, vector<Card>, greater<>>& groups, const vector<Card>& sorted, vector<Card>& result) {
-        for (const auto& [val, group] : groups) {
+        for (auto it = groups.begin(); it != groups.end(); ++it) {
+            Value val = it->first;
+            const vector<Card>& group = it->second;
             if (group.size() == 3) {
-                result = group;
+                result.assign(group.begin(), group.end());
                 for (const auto& card : sorted) {
-                    if (card.GetValue() != val) result.push_back(card);
+                    if (static_cast<int>(card.GetValue()) != static_cast<int>(val)) result.push_back(card);
                     if (result.size() == 5) break;
                 }
                 return true;
@@ -76,10 +83,13 @@ namespace {
 
     bool CheckTwoPair(const map<Value, vector<Card>, greater<>>& groups, const vector<Card>& sorted, vector<Card>& result) {
         int pairCount = 0;
-        Value firstPairValue = Value::Size;
-        for (const auto& [val, group] : groups) {
+        auto firstPairValue = Value::Size;
+        for (auto it = groups.begin(); it != groups.end(); ++it) {
+            const Value val = it->first;
+            const vector<Card>& group = it->second;
             if (group.size() >= 2 && pairCount < 2) {
-                result.insert(result.end(), group.begin(), group.begin() + 2);
+                result.push_back(group[0]);
+                result.push_back(group[1]);
                 if (pairCount == 0) firstPairValue = val;
                 pairCount++;
             }
@@ -97,11 +107,13 @@ namespace {
     }
 
     bool CheckOnePair(const vector<Card>& sorted, const map<Value, vector<Card>, greater<>>& groups, vector<Card>& result) {
-        for (const auto& [val, group] : groups) {
+        for (auto it = groups.begin(); it != groups.end(); ++it) {
+            Value val = it->first;
+            const vector<Card>& group = it->second;
             if (group.size() == 2) {
-                result = group;
+                result.assign(group.begin(), group.end());
                 for (const auto& card : sorted) {
-                    if (card.GetValue() != val) result.push_back(card);
+                    if (static_cast<int>(card.GetValue()) != static_cast<int>(val)) result.push_back(card);
                     if (result.size() == 5) break;
                 }
                 return true;
@@ -115,7 +127,7 @@ pair<HandRank, vector<Card>> HandEvaluator::Evaluate(const vector<Card>& cards) 
     vector<Card> sorted = cards;
     sort(sorted.begin(), sorted.end(), greater<>());
 
-    auto groups = GroupByValue(sorted);
+    const auto groups = GroupByValue(sorted);
     vector<Card> result;
 
     if (IsFlush(sorted) && IsStraight(sorted)) {
