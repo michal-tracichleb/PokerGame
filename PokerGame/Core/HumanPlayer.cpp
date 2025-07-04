@@ -24,3 +24,13 @@ PlayerDecision HumanPlayer::MakeDecision(const GameState& state)
     const int callAmount = state.currentBet - GetCurrentBet();
     return _ui->RenderPlayerDecisionPrompt(*this, callAmount);
 }
+
+int HumanPlayer::GetRaiseAmount(const int minRaise, const int maxRaise) const
+{
+    if (!_ui) {
+        std::cerr << "GameUI not set for HumanPlayer!\n";
+        return minRaise;
+    }
+
+    return _ui->RenderRaiseAmountPrompt(_name, minRaise, maxRaise);
+}

@@ -55,6 +55,7 @@ void GameManager::ResetRound()
     {
         player->ResetBet();
         player->Unfold();
+        player->ClearHand();
     }
     _state.currentBet = 0;
     _state.pot = 0;
@@ -130,11 +131,15 @@ void GameManager::MakeDecisions()
         case PlayerDecision::Raise:
         case PlayerDecision::Bet:
             {
-                int raiseAmount = 50; // TODO: prompt dla HumanPlayer
+                const int minRaise = _state.minimumRaise > 0 ? _state.minimumRaise : 10;
+                const int maxRaise = player->GetChips();
+
+                const int raiseAmount = player->GetRaiseAmount(minRaise, maxRaise);
                 player->PayChips(raiseAmount);
+                player->SetCurrentBet(player->GetCurrentBet() + raiseAmount);
                 _state.pot += raiseAmount;
-                _state.currentBet = player->GetCurrentBet();
-                break;
+                _state.currentBet = _state.currentBet > player->GetCurrentBet() ? _state.currentBet : player->GetCurrentBet();
+                _state.minimumRaise = raiseAmount;
             }
 
         default:

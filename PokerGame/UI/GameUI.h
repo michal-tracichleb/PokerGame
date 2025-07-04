@@ -10,6 +10,7 @@ public:
 
     void RenderTable(const Table& table, const GameState& state);
     PlayerDecision RenderPlayerDecisionPrompt(Player& player, int callAmount) const;
+    int RenderRaiseAmountPrompt(const std::string& playerName, const int minRaise, const int maxRaise) const;
     void RenderShowdown(const Table& table, const GameState& state);
 
 private:

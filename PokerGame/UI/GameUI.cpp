@@ -56,19 +56,17 @@ void GameUI::RenderTable(const Table& table, const GameState& state)
     _ui->DrawTextWithColor(2, y++, "Phase: " + phase, TextColor::Magenta);
 }
 
-PlayerDecision GameUI::
-RenderPlayerDecisionPrompt(Player& player, const int callAmount) const
+PlayerDecision GameUI::RenderPlayerDecisionPrompt(Player& player, const int callAmount) const
 {
-    _ui->Clear();
     int y = 2;
 
-    _ui->DrawTextWithColor(2, y++, "Your turn, " + player.GetName(), TextColor::Yellow);
-    _ui->DrawTextWithColor(2, y++, "Chips: " + to_string(player.GetChips()), TextColor::Default);
+    _ui->DrawTextWithColor(35, y++, "Your turn, " + player.GetName(), TextColor::Yellow);
+    _ui->DrawTextWithColor(35, y++, "Chips: " + to_string(player.GetChips()), TextColor::Default);
 
     string hand = "Cards: ";
     for (const auto& card : player.GetHand())
         hand += card.ToString() + " ";
-    _ui->DrawTextWithColor(2, y++, hand, TextColor::Default);
+    _ui->DrawTextWithColor(35, y++, hand, TextColor::Default);
 
     y++;
 
@@ -78,7 +76,7 @@ RenderPlayerDecisionPrompt(Player& player, const int callAmount) const
         "Raise"
     };
 
-    const int choice = _ui->GetArrowSelection(options, 4, y);
+    const int choice = _ui->GetArrowSelection(options, 35, y);
     switch (choice) {
     case 0: return PlayerDecision::Fold;
     case 1: return PlayerDecision::Call;
@@ -86,3 +84,22 @@ RenderPlayerDecisionPrompt(Player& player, const int callAmount) const
     default: return PlayerDecision::Fold;
     }
 }
+
+int GameUI::RenderRaiseAmountPrompt(const std::string& playerName, const int minRaise, const int maxRaise) const
+{
+    _ui->DrawTextWithColor(35, 10, playerName + ", enter your raise amount.", TextColor::Yellow);
+    _ui->DrawTextWithColor(35, 12, "Minimum: " + std::to_string(minRaise), TextColor::Default);
+    _ui->DrawTextWithColor(35, 13, "Maximum: " + std::to_string(maxRaise), TextColor::Default);
+    _ui->DrawTextWithColor(35, 15, "> ", TextColor::Default);
+
+    int amount;
+    std::cin >> amount;
+    
+    if (amount < minRaise)
+        amount = minRaise;
+    else if (amount > maxRaise)
+        amount = maxRaise;
+
+    return amount;
+}
+

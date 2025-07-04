@@ -27,11 +27,13 @@ public:
     void Unfold();
 
     int GetCurrentBet() const;
+    void SetCurrentBet(int newBet);
     void PayChips(int amount);
     void ResetBet();
 
-    virtual PlayerDecision MakeDecision(const GameState& state) = 0;
     virtual bool IsAI() const { return false; }
+    virtual PlayerDecision MakeDecision(const GameState& state) = 0;
+    virtual int GetRaiseAmount(int minRaise, int maxRaise) const = 0;
 
 protected:
     std::string _name;

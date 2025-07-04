@@ -22,3 +22,11 @@ PlayerDecision AIPlayer::MakeDecision(const GameState& state)
 
     return PlayerDecision::Raise;
 }
+
+int AIPlayer::GetRaiseAmount(const int minRaise, const int maxRaise) const
+{
+    if (maxRaise <= minRaise)
+        return minRaise;
+
+    return Random::Range(minRaise, maxRaise);
+}
