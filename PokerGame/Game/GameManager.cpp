@@ -66,7 +66,6 @@ void GameManager::ResetRound()
 void GameManager::RenderState()
 {
     _gameUI.RenderTable(_table, _state);
-    
 }
 
 void GameManager::ProcessTurn()
@@ -106,10 +105,27 @@ void GameManager::ProcessTurn()
 
 void GameManager::MakeDecisions()
 {
-    for (const auto& player : _table.GetPlayers())
+    auto& players = _table.GetPlayers();
+    const int numPlayers = static_cast<int>(players.size());
+    int currentPlayerIndex = _state.activePlayerIndex;
+    int playersToAct = numPlayers;
+
+    bool bettingRoundOngoing = true;
+
+    while (bettingRoundOngoing)
     {
+        auto& player = players[currentPlayerIndex];
+        
         if (player->IsFolded() || player->GetChips() <= 0)
+        {
+            currentPlayerIndex = (currentPlayerIndex + 1) % numPlayers;
+            --playersToAct;
+            if (playersToAct <= 0)
+                bettingRoundOngoing = false;
             continue;
+        }
+
+        RenderState();
 
         const auto decision = player->MakeDecision(_state);
 
@@ -121,35 +137,43 @@ void GameManager::MakeDecisions()
 
         case PlayerDecision::Call:
         case PlayerDecision::Check:
-            {
-                int toCall = _state.currentBet - player->GetCurrentBet();
-                player->PayChips(toCall);
-                _state.pot += toCall;
-                break;
-            }
+        {
+            const int toCall = _state.currentBet - player->GetCurrentBet();
+            player->PayChips(toCall);
+            player->SetCurrentBet(_state.currentBet);
+            _state.pot += toCall;
+            break;
+        }
 
         case PlayerDecision::Raise:
         case PlayerDecision::Bet:
-            {
-                const int minRaise = _state.minimumRaise > 0 ? _state.minimumRaise : 10;
-                const int maxRaise = player->GetChips();
+        {
+            const int minRaise = _state.minimumRaise > 0 ? _state.minimumRaise : 10;
+            const int maxRaise = player->GetChips();
+            const int raiseAmount = player->GetRaiseAmount(minRaise, maxRaise);
 
-                const int raiseAmount = player->GetRaiseAmount(minRaise, maxRaise);
-                player->PayChips(raiseAmount);
-                player->SetCurrentBet(player->GetCurrentBet() + raiseAmount);
-                _state.pot += raiseAmount;
-                _state.currentBet = _state.currentBet > player->GetCurrentBet() ? _state.currentBet : player->GetCurrentBet();
-                _state.minimumRaise = raiseAmount;
-            }
+            player->PayChips(raiseAmount);
+            player->SetCurrentBet(player->GetCurrentBet() + raiseAmount);
+            _state.pot += raiseAmount;
+
+            _state.minimumRaise = raiseAmount;
+            _state.currentBet = player->GetCurrentBet();
+                
+            playersToAct = numPlayers;
+            break;
+        }
 
         default:
             break;
         }
 
-        RenderState();
+        currentPlayerIndex = (currentPlayerIndex + 1) % numPlayers;
+        --playersToAct;
+        
+        if (playersToAct <= 0)
+            bettingRoundOngoing = false;
     }
 }
-
 
 bool GameManager::IsRoundOver() const
 {
