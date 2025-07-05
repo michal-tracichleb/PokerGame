@@ -30,12 +30,12 @@ void GameUI::RenderTable(const Table& table, const GameState& state)
         _ui->DrawTextWithColor(4, y++, info, statusColor);
 
         string hand = "Cards: ";
-        if (player->IsAI()) {
-            hand += "[X X] [X X]";
-        } else {
+        //if (player->IsAI()) {
+        //    hand += "[X X] [X X]";
+        //} else {
             for (const auto& card : player->GetHand())
                 hand += card.ToString() + " ";
-        }
+        //}
         _ui->DrawTextWithColor(6, y++, hand, TextColor::Default);
 
         y++;

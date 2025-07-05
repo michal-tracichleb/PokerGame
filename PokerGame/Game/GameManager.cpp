@@ -1,8 +1,10 @@
 ﻿#include "GameManager.h"
 #include "../Core/HumanPlayer.h"
 #include "../Core/AIPlayer.h"
+#include "../Core/HandEvaluator.h"
 #include <iostream>
 
+enum class HandRank : uint8_t;
 using namespace std;
 
 
@@ -97,10 +99,7 @@ void GameManager::ProcessTurn()
     case GamePhase::River:
         _state.phase = GamePhase::Showdown;
         break;
-
-    case GamePhase::Showdown:
-        break;
-
+    
     default:
         throw out_of_range("Invalid GamePhase");
     }
@@ -156,7 +155,7 @@ void GameManager::MakeDecisions()
                 const int toCall = _state.currentBet - player->GetCurrentBet();
                 const int minRaise = toCall == 0 ? 10 : toCall;
                 const int maxRaise = player->GetChips();
-                const int raiseAmount = player->GetRaiseAmount(minRaise, maxRaise);
+                const int raiseAmount = player->GetRaiseAmount(minRaise, minRaise + 50);
 
                 const int newBet = _state.currentBet + raiseAmount;
 
@@ -181,9 +180,53 @@ void GameManager::MakeDecisions()
     }
 }
 
-bool GameManager::IsRoundOver() const
+void GameManager::EvaluateShowdownWinner()
 {
-    return _state.phase == GamePhase::Showdown;
+    vector<shared_ptr<Player>> contenders;
+    for (const auto& player : _table.GetPlayers()) {
+        if (!player->IsFolded()) {
+            contenders.push_back(player);
+        }
+    }
+
+    shared_ptr<Player> winner = nullptr;
+    auto bestRank = HandRank::HighCard;
+    vector<Card> bestHand;
+
+    for (const auto& player : contenders) {
+        vector<Card> fullHand = player->GetHand();
+        fullHand.insert(fullHand.end(), _state.communityCards.begin(), _state.communityCards.end());
+
+        const pair<HandRank, vector<Card>> evaluation = HandEvaluator::Evaluate(fullHand);
+        HandRank rank = evaluation.first;
+        vector<Card> hand = evaluation.second;
+        
+        if (!winner ||
+                static_cast<int>(rank) > static_cast<int>(bestRank) ||
+                (static_cast<int>(rank) == static_cast<int>(bestRank) && hand > bestHand))
+        {
+            winner = player;
+            bestRank = rank;
+            bestHand = hand;
+        }
+    }
+
+    if (winner) {
+        winner->AddChips(_state.pot);
+        cout << "\nWinner is: " << winner->GetName()
+                  << " with " << static_cast<int>(bestRank) << "!\n";
+        cin.get();
+    }
+}
+
+bool GameManager::IsRoundOver()
+{
+    if (_state.phase == GamePhase::Showdown)
+    {
+        EvaluateShowdownWinner();
+        return true;
+    }
+    return false;
 }
 
 bool GameManager::IsGameOver() const

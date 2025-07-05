@@ -26,11 +26,12 @@ private:
     
     void GameLoop();
     void ResetRound();
-    bool IsRoundOver() const;
+    bool IsRoundOver();
     bool IsGameOver() const;
 
     void ProcessTurn();
     void MakeDecisions();
+    void EvaluateShowdownWinner();
     
     void RenderState();
 };
