@@ -70,6 +70,11 @@ void GameManager::RenderState()
 
 void GameManager::ProcessTurn()
 {
+    _state.currentBet = 0;
+
+    for (auto& player : _table.GetPlayers())
+        player->ResetBet();
+    
     MakeDecisions();
 
     switch (_state.phase)
@@ -140,28 +145,29 @@ void GameManager::MakeDecisions()
         {
             const int toCall = _state.currentBet - player->GetCurrentBet();
             player->PayChips(toCall);
-            player->SetCurrentBet(_state.currentBet);
+            player->SetCurrentBet(_state.currentBet + toCall);
             _state.pot += toCall;
             break;
         }
 
         case PlayerDecision::Raise:
         case PlayerDecision::Bet:
-        {
-            const int minRaise = _state.minimumRaise > 0 ? _state.minimumRaise : 10;
-            const int maxRaise = player->GetChips();
-            const int raiseAmount = player->GetRaiseAmount(minRaise, maxRaise);
+            {
+                const int toCall = _state.currentBet - player->GetCurrentBet();
+                const int minRaise = toCall == 0 ? 10 : toCall;
+                const int maxRaise = player->GetChips();
+                const int raiseAmount = player->GetRaiseAmount(minRaise, maxRaise);
 
-            player->PayChips(raiseAmount);
-            player->SetCurrentBet(player->GetCurrentBet() + raiseAmount);
-            _state.pot += raiseAmount;
+                const int newBet = _state.currentBet + raiseAmount;
 
-            _state.minimumRaise = raiseAmount;
-            _state.currentBet = player->GetCurrentBet();
-                
-            playersToAct = numPlayers;
-            break;
-        }
+                player->PayChips(raiseAmount);
+                player->SetCurrentBet(newBet);
+                _state.pot += raiseAmount;
+                _state.currentBet = newBet;
+
+                playersToAct = numPlayers; 
+                break;
+            }
 
         default:
             break;

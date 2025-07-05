@@ -9,7 +9,6 @@ struct GameState {
     std::vector<Card> communityCards;
     int pot = 0;
     int currentBet = 0;
-    int minimumRaise = 0;
     int activePlayerIndex = 0;
     GamePhase phase = GamePhase::PreFlop;
 };
