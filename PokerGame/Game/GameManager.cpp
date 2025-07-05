@@ -46,7 +46,7 @@ void GameManager::GameLoop()
             ProcessTurn();
         }
 
-        std::cout << "\nRound finished. Press Enter to continue.\n";
+        _ui->DrawTextWithColor(35, 10,"Round finished. Press Enter to continue.");
         std::cin.get();
     }
 }
@@ -103,8 +103,6 @@ void GameManager::ProcessTurn()
     default:
         throw out_of_range("Invalid GamePhase");
     }
-
-    std::cin.get();
 }
 
 void GameManager::MakeDecisions()

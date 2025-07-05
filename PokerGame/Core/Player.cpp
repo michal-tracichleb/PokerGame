@@ -59,6 +59,7 @@ void Player::Fold()
 void Player::Unfold()
 {
     if (_chips > 0) _folded = false;
+    else _folded = true;
 }
 
 int Player::GetCurrentBet() const

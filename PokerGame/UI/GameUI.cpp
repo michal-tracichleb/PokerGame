@@ -111,7 +111,4 @@ void GameUI::RenderShowdown(const std::string& playerName, const HandRank bestRa
     _ui->DrawTextWithColor(35, y++, "Showdown!", TextColor::Yellow);
     _ui->DrawTextWithColor(35, y++, "Winner: " + playerName, TextColor::Green);
     _ui->DrawTextWithColor(35, y++, "Winning Hand: " + RankToString(bestRank), TextColor::Cyan);
-    _ui->DrawTextWithColor(35, y,"Press Enter to continue...");
-    
-    std::cin.get();
 }
