@@ -30,12 +30,13 @@ void GameUI::RenderTable(const Table& table, const GameState& state)
         _ui->DrawTextWithColor(4, y++, info, statusColor);
 
         string hand = "Cards: ";
-        //if (player->IsAI()) {
-        //    hand += "[X X] [X X]";
-        //} else {
+        if (state.phase != GamePhase::Showdown
+            && player->IsAI()) {
+           hand += "[X X] [X X]";
+        } else {
             for (const auto& card : player->GetHand())
                 hand += card.ToString() + " ";
-        //}
+        }
         _ui->DrawTextWithColor(6, y++, hand, TextColor::Default);
 
         y++;
@@ -103,3 +104,14 @@ int GameUI::RenderRaiseAmountPrompt(const std::string& playerName, const int min
     return amount;
 }
 
+void GameUI::RenderShowdown(const std::string& playerName, const HandRank bestRank) const
+{
+    int y = 1;
+    
+    _ui->DrawTextWithColor(35, y++, "Showdown!", TextColor::Yellow);
+    _ui->DrawTextWithColor(35, y++, "Winner: " + playerName, TextColor::Green);
+    _ui->DrawTextWithColor(35, y++, "Winning Hand: " + RankToString(bestRank), TextColor::Cyan);
+    _ui->DrawTextWithColor(35, y,"Press Enter to continue...");
+    
+    std::cin.get();
+}

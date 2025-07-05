@@ -213,9 +213,7 @@ void GameManager::EvaluateShowdownWinner()
 
     if (winner) {
         winner->AddChips(_state.pot);
-        cout << "\nWinner is: " << winner->GetName()
-                  << " with " << static_cast<int>(bestRank) << "!\n";
-        cin.get();
+        _gameUI.RenderShowdown(winner->GetName(), bestRank);
     }
 }
 
@@ -223,6 +221,7 @@ bool GameManager::IsRoundOver()
 {
     if (_state.phase == GamePhase::Showdown)
     {
+        RenderState();
         EvaluateShowdownWinner();
         return true;
     }
